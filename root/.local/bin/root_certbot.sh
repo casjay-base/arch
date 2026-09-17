@@ -47,7 +47,7 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CERTBOT_FILE="${CERTBOT_FILE:-}"
 CERTBOT_KEY_FILE="${CERTBOT_KEY_FILE:-/root/.config/certbot/dns_rfc2136_secret}"
-CERTBOT_KEY_ENV="${CERTBOT_KEY_ENV:-$(grep -s 'dns_rfc2136_secret = ' "$CERTBOT_FILE" 2>/dev/null | awk -F' = ' '{print $2}' | grep '^' || false)}"
+CERTBOT_KEY_ENV="${CERTBOT_KEY_ENV:-$(grep -s -- 'dns_rfc2136_secret = ' "$CERTBOT_FILE" 2>/dev/null | awk -F' = ' '{print $2}' | grep -- '^' || false)}"
 CERTBOT_API_KEY="${CERTBOT_API_KEY:-$CERTBOT_KEY_ENV}"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if [ -z "${CERTBOT3_BIN:-$CERTBOT_BIN}" ]; then
