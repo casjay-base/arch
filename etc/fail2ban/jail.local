@@ -26,6 +26,16 @@ findtime  = 3600
 maxretry = 5
 backend = auto
 usedns = warn
+# jail.conf's stock banaction (firewallcmd-ipset) requires firewall-cmd,
+# which this distro doesn't have (firewalld isn't used here - see
+# min.sh's firewall block, which uses ufw when available and raw
+# nftables otherwise) - actionban would fail silently and bans would
+# never actually take effect. nftables-multiport targets the `nft`
+# binary directly, which is present in both cases (ufw itself sits on
+# top of the same nftables kernel subsystem on this distro), so it
+# works regardless of which branch a given host took. blocktype=drop
+# matches the "DROP not REJECT" firewall policy (default is reject).
+banaction = nftables-multiport[blocktype=drop]
 # Merged from the former etc/fail2ban/ips.txt (removed - fail2ban never
 # auto-loads a bare .txt file, so that file was dead configuration; folding
 # its ranges in here is what actually makes them take effect). Keeps
